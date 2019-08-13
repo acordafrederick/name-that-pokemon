@@ -46,11 +46,13 @@ var correct = 0;
 var seconds = 30;
 // show user answer is correct
 function check() {
+    setTimeout(countdown);
     console.log("Correct");
     next()
 }
 // show user the correct answer if answer is wrong
 function wrong() {
+    setTimeout(countdown);
     console.log("Incorrect");
     next();
 }
@@ -59,6 +61,7 @@ function wrong() {
   // go to question 1
 function play() {
     //   console.log(questions[currentQuestion]["sprite"]);
+    setInterval(countdown, 1000);
     document.getElementById("sprite").setAttribute("src", questions[currentQuestion]["sprite"]);
     document.getElementById("sprite").setAttribute("alt", questions[currentQuestion]["name"]);
     //   console.log(questions[currentQuestion]["choices"]);
@@ -81,6 +84,16 @@ function next() {
     if (currentQuestion <= questions.length) {
         currentQuestion++;
         play();
+    }
+}
+
+function countdown() {
+    console.log(seconds);
+    if (seconds >= 0) {
+        seconds--;
+    }
+    else {
+        console.log("Time's up!");
     }
 }
 
