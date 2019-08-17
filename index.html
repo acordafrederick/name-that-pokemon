@@ -6,14 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Who's That Pokémon?</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+    crossorigin="anonymous"></script>
 </head>
-<body>
+    <body>
         <button type="button" onclick="play()">PLAY</button>
         <br>
-        <img id="sprite" src="https://vectr.com/adrick/a2M6L3o5Np.svg?width=640&height=640&select=a2M6L3o5Nppage0" alt="Pokéball">
+        <p>Correct Ansers: <span id="correct"><span></p>
+        <p>Incorrect Ansers: <span id="incorrect"><span></p>
+        <img id="sprite" src="https://vectr.com/adrick/a2M6L3o5Np.svg?width=640&height=640&select=a2M6L3o5Nppage0" alt="Pokeball">
         <br>
         <div id="options"></div>
-        <br>
-    <script src="script.js"></script>
-</body>
+        <div id="conclusion"></div>
+        <script src="script.js"></script>
+    </body>
 </html>
