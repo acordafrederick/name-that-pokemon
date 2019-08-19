@@ -1,3 +1,5 @@
+$("#play").hide();
+
 $(document).ready(function() {
   
   var questions = [
@@ -127,5 +129,9 @@ $(document).ready(function() {
   var incorrectCount = 0;
   var currentQuestion = 0;
   var seconds = 30;
+  
+  setTimeout(function() {
+    $("#play").show();
+  }, 5000);
   
 }); // end of document.ready function
