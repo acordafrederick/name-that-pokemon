@@ -130,8 +130,25 @@ $(document).ready(function() {
   var currentQuestion = 0;
   var seconds = 30;
   
+  function play() {
+    $("img").attr({
+      src: questions[currentQuestion]["sprite"],
+      alt: questions[currentQuestion]["name"]
+    });
+    for (var i = 0; i < questions[currentQuestion]["choices"].length; i++) {
+      $("#options").append(
+        "<button>" + questions[currentQuestion]["choices"][i] + "</button>"
+      );
+    }
+  }
+  
   setTimeout(function() {
     $("#play").show();
   }, 5000);
+  
+  $("#play").click(function () { // call to play function
+    $(this).hide();
+    play();
+  });
   
 }); // end of document.ready function
