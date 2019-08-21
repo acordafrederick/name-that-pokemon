@@ -102,4 +102,21 @@ $(document).ready(function() {
       });
     });
   } // end of play function
+  
+  function checkAnswer() {
+    checkCount++;
+    $("#prompt").text("Correct!");
+    setTimeout(function() {
+      nextQuestion();
+    }, 3000);
+  }
+
+  function wrongAnswer() {
+    wrongCount++;
+    $("#prompt").text("Incorrect!");
+    setTimeout(function() {
+      nextQuestion();
+    }, 3000);
+  }
+  
 }); // end of document.ready function
