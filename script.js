@@ -119,4 +119,9 @@ $(document).ready(function() {
     }, 3000);
   }
   
+  function nextQuestion() {
+    currentQuestion++;
+    play();
+  }
+  
 }); // end of document.ready function
