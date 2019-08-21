@@ -40,7 +40,7 @@ $(document).ready(function() {
     {
       name: "Xurkitree",
       sprite: "https://cdn.bulbagarden.net/upload/d/d2/796Xurkitree.png",
-      choices: ["lectivire", "Zeraora", "Xurkitree", "Eelektross"]
+      choices: ["Electivire", "Zeraora", "Xurkitree", "Eelektross"]
     },
     {
       name: "Stakatak",
@@ -59,8 +59,8 @@ $(document).ready(function() {
     }
   ];
 
-  var correctCount = 0;
-  var incorrectCount = 0;
+  var checkCount = 0;
+  var wrongCount = 0;
   var currentQuestion = 0;
   var seconds = 30;
 
@@ -74,13 +74,32 @@ $(document).ready(function() {
   });
 
   function play() {
+    // set img to current question
     $("img").attr({
       src: questions[currentQuestion]["sprite"],
       alt: questions[currentQuestion]["name"]
     });
+    // loop thru choices, populate to screen as buttons
     for (var i = 0; i < questions[currentQuestion]["choices"].length; i++) {
-      $("#options").append("<button value='" + questions[currentQuestion]["choices"][i] +
-                           "' type='button'>" + questions[currentQuestion]["choices"][i] + "</button>");
+      $("#options").append(
+        "<button value='" +
+          questions[currentQuestion]["choices"][i] +
+          "' type='button'>" +
+          questions[currentQuestion]["choices"][i] +
+          "</button>"
+      );
     }
-  }
+    // set click functions for check or wrong answers
+    $("#options button").each(function() {
+      $(this).click(function() {
+        if ($(this).attr("value") === questions[currentQuestion]["name"]) {
+          checkAnswer();
+          $("#options button").remove();
+        } else {
+          wrongAnswer();
+          $("#options button").remove();
+        }
+      });
+    });
+  } // end of play function
 }); // end of document.ready function
