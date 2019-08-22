@@ -102,7 +102,7 @@ $(document).ready(function() {
       });
     });
   } // end of play function
-  
+
   function checkAnswer() {
     checkCount++;
     $("#prompt").text("Correct!");
@@ -118,10 +118,10 @@ $(document).ready(function() {
       nextQuestion();
     }, 3000);
   }
-  
+
   function nextQuestion() {
     currentQuestion++;
     play();
   }
-  
+
 }); // end of document.ready function
