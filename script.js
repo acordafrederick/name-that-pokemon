@@ -74,13 +74,14 @@ $(document).ready(function() {
   });
 
   function play() {
+    $("#prompt").text("Who's That Pokemon?");
     // set img to current question
     $("img").attr({
       src: questions[currentQuestion]["sprite"],
       alt: questions[currentQuestion]["name"]
     });
-    // loop thru choices, populate to screen as buttons
     for (var i = 0; i < questions[currentQuestion]["choices"].length; i++) {
+      // loop thru questions.choices, populate to screen as buttons
       $("#options").append(
         "<button value='" +
           questions[currentQuestion]["choices"][i] +
@@ -89,8 +90,8 @@ $(document).ready(function() {
           "</button>"
       );
     }
-    // set click functions for check or wrong answers
     $("#options button").each(function() {
+      // set click functions for buttons
       $(this).click(function() {
         if ($(this).attr("value") === questions[currentQuestion]["name"]) {
           checkAnswer();
@@ -101,27 +102,68 @@ $(document).ready(function() {
         }
       });
     });
-  } // end of play function
+  } // end of play function()
 
   function checkAnswer() {
     checkCount++;
-    $("#prompt").text("Correct!");
-    setTimeout(function() {
-      nextQuestion();
-    }, 3000);
-  }
+    $("#prompt").text(
+      "That's right! You answered " +
+        checkCount +
+        " / " +
+        questions.length +
+        " correctly!"
+    );
+    if ($("img").attr("alt") !== questions[questions.length - 1].name) {
+      setTimeout(function() {
+        nextQuestion();
+      }, 3000);
+    } else {
+      setTimeout(function() {
+        reset();
+      }, 3000);
+    }
+  } // end of checkAnswer()
 
   function wrongAnswer() {
     wrongCount++;
-    $("#prompt").text("Incorrect!");
-    setTimeout(function() {
-      nextQuestion();
-    }, 3000);
-  }
+    $("#prompt").text(
+      "Correct answer is " +
+        $("img").attr("alt") +
+        ". You have " +
+        wrongCount +
+        " / " +
+        questions.length +
+        " incorrect answers!"
+    );
+    if ($("img").attr("alt") !== questions[questions.length - 1].name) {
+      setTimeout(function() {
+        nextQuestion();
+      }, 3000);
+    } else {
+      setTimeout(function() {
+        reset();
+      }, 3000);
+    }
+  } // end of wrongAnswer()
 
   function nextQuestion() {
     currentQuestion++;
     play();
   }
 
+  function reset() {
+    $("#prompt").text(checkCount + " check/s, " + wrongCount + " mistake/s.");
+    $("img").attr({
+      src:
+        "https://vectr.com/adrick/a2M6L3o5Np.svg width=640&height=640&select=a2M6L3o5Nppage0",
+      alt: "Pokeball"
+    });
+    setTimeout(function() {
+      checkCount = 0;
+      wrongCount = 0;
+      currentQuestion = 0;
+      $("#prompt").text("Play Again?");
+      $("#play").show();
+    }, 5000);
+  } // end or reset()
 }); // end of document.ready function
