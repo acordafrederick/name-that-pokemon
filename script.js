@@ -74,7 +74,7 @@ $(document).ready(function() {
   });
 
   function play() {
-    $("#prompt").text("Who's That Pokemon?");
+    $("#prompt").text(`Who's That Pokemon?`);
     // set img to current question
     $("img").attr({
       src: questions[currentQuestion]["sprite"],
@@ -83,11 +83,9 @@ $(document).ready(function() {
     for (var i = 0; i < questions[currentQuestion]["choices"].length; i++) {
       // loop thru questions.choices, populate to screen as buttons
       $("#options").append(
-        "<button value='" +
-          questions[currentQuestion]["choices"][i] +
-          "' type='button'>" +
-          questions[currentQuestion]["choices"][i] +
-          "</button>"
+        `<button value="${
+          questions[currentQuestion]["choices"][i]
+        }" type="button">${questions[currentQuestion]["choices"][i]}</button>`
       );
     }
     $("#options button").each(function() {
@@ -106,13 +104,7 @@ $(document).ready(function() {
 
   function checkAnswer() {
     checkCount++;
-    $("#prompt").text(
-      "That's right! You answered " +
-        checkCount +
-        " / " +
-        questions.length +
-        " correctly!"
-    );
+    $("#prompt").text(`That's right! ${$("img").attr("alt")} is the answer!`);
     if ($("img").attr("alt") !== questions[questions.length - 1].name) {
       setTimeout(function() {
         nextQuestion();
@@ -126,15 +118,7 @@ $(document).ready(function() {
 
   function wrongAnswer() {
     wrongCount++;
-    $("#prompt").text(
-      "Correct answer is " +
-        $("img").attr("alt") +
-        ". You have " +
-        wrongCount +
-        " / " +
-        questions.length +
-        " incorrect answers!"
-    );
+    $("#prompt").text(`Woops! Correct answer is ${$("img").attr("alt")}.`);
     if ($("img").attr("alt") !== questions[questions.length - 1].name) {
       setTimeout(function() {
         nextQuestion();
@@ -152,7 +136,7 @@ $(document).ready(function() {
   }
 
   function reset() {
-    $("#prompt").text(checkCount + " check/s, " + wrongCount + " mistake/s.");
+    $("#prompt").text(`${checkCount} check/s, ${wrongCount} mistake/s!`);
     $("img").attr({
       src:
         "https://vectr.com/adrick/a2M6L3o5Np.svg width=640&height=640&select=a2M6L3o5Nppage0",
@@ -162,7 +146,7 @@ $(document).ready(function() {
       checkCount = 0;
       wrongCount = 0;
       currentQuestion = 0;
-      $("#prompt").text("Play Again?");
+      $("#prompt").text(`Play Again?`);
       $("#play").show();
     }, 5000);
   } // end or reset()
