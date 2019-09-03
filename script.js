@@ -105,34 +105,26 @@ $(document).ready(function() {
   function checkAnswer() {
     checkCount++;
     $("#prompt").text(`That's right! ${$("img").attr("alt")} is the answer!`);
-    if ($("img").attr("alt") !== questions[questions.length - 1].name) {
-      setTimeout(function() {
-        nextQuestion();
-      }, 3000);
-    } else {
-      setTimeout(function() {
-        reset();
-      }, 3000);
-    }
-  } // end of checkAnswer()
+    nextQuestion();
+  }
 
   function wrongAnswer() {
     wrongCount++;
     $("#prompt").text(`Woops! Correct answer is ${$("img").attr("alt")}.`);
+    nextQuestion();
+  }
+
+  function nextQuestion() {
     if ($("img").attr("alt") !== questions[questions.length - 1].name) {
       setTimeout(function() {
-        nextQuestion();
+        currentQuestion++;
+        play();
       }, 3000);
     } else {
       setTimeout(function() {
         reset();
       }, 3000);
     }
-  } // end of wrongAnswer()
-
-  function nextQuestion() {
-    currentQuestion++;
-    play();
   }
 
   function reset() {
