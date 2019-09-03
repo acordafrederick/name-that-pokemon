@@ -61,6 +61,7 @@ $(document).ready(function() {
 
   var checkCount = 0;
   var wrongCount = 0;
+  var noAnswerCount = 0;
   var currentQuestion = 0;
   var seconds = 15;
   var startCountDown;
@@ -71,17 +72,17 @@ $(document).ready(function() {
 
   $("#play").click(function() {
     $(this).hide();
-    countDown()
+    countDown();
     play();
   });
-  
+
   function countDown() {
     $("#prompt").text(`Time left: ${seconds} seconds`);
     if (seconds !== 0) {
       seconds--;
       startCountDown = setTimeout(countDown, 1000);
     } else {
-      wrongAnswer();
+      noAnswer();
     }
   }
 
@@ -92,21 +93,18 @@ $(document).ready(function() {
 
   function play() {
     $("#prompt").text(`Who's That Pokemon?`);
-    // set img to current question
     $("img").attr({
       src: questions[currentQuestion]["sprite"],
       alt: questions[currentQuestion]["name"]
     });
     for (var i = 0; i < questions[currentQuestion]["choices"].length; i++) {
-      // loop thru questions.choices, populate to screen as buttons
       $("#options").append(
         `<button value="${
-          questions[currentQuestion]["choices"][i]
+        questions[currentQuestion]["choices"][i]
         }" type="button">${questions[currentQuestion]["choices"][i]}</button>`
       );
     }
     $("#options button").each(function() {
-      // set click functions for buttons
       $(this).click(function() {
         if ($(this).attr("value") === questions[currentQuestion]["name"]) {
           checkAnswer();
@@ -115,7 +113,7 @@ $(document).ready(function() {
         }
       });
     });
-  } // end of play function()
+  } // end of play()
 
   function checkAnswer() {
     checkCount++;
@@ -129,12 +127,18 @@ $(document).ready(function() {
     nextQuestion();
   }
 
+  function noAnswer() {
+    noAnswerCount++;
+    $("#prompt").text(`Boo hoo! The answer is ${$("img").attr("alt")}.`);
+    nextQuestion();
+  }
+
   function nextQuestion() {
     $("#options button").remove();
     if ($("img").attr("alt") !== questions[questions.length - 1].name) {
       setTimeout(function() {
         currentQuestion++;
-        countDown()
+        countDown();
         play();
       }, 3000);
     } else {
@@ -143,18 +147,21 @@ $(document).ready(function() {
       }, 3000);
     }
     resetCount();
-  }
+  } // end of nextQuestion()
 
   function reset() {
-    $("#prompt").text(`${checkCount} check/s, ${wrongCount} mistake/s!`);
+    $("#prompt").text(
+      `${checkCount} check/s, ${wrongCount} mistake/s, ${noAnswerCount} unanswered!`
+    );
     $("img").attr({
       src:
-        "https://vectr.com/adrick/a2M6L3o5Np.svg width=640&height=640&select=a2M6L3o5Nppage0",
+      "https://vectr.com/adrick/a2M6L3o5Np.svg width=640&height=640&select=a2M6L3o5Nppage0",
       alt: "Pokeball"
     });
     setTimeout(function() {
       checkCount = 0;
       wrongCount = 0;
+      noAnswerCount = 0;
       currentQuestion = 0;
       $("#prompt").text(`Play Again?`);
       $("#play").show();
