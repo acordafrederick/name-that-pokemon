@@ -62,7 +62,8 @@ $(document).ready(function() {
   var checkCount = 0;
   var wrongCount = 0;
   var currentQuestion = 0;
-  var seconds = 30;
+  var seconds = 15;
+  var startCountDown;
 
   setTimeout(function() {
     $("#play").show();
@@ -70,8 +71,24 @@ $(document).ready(function() {
 
   $("#play").click(function() {
     $(this).hide();
+    countDown()
     play();
   });
+  
+  function countDown() {
+    $("#prompt").text(`Time left: ${seconds} seconds`);
+    if (seconds !== 0) {
+      seconds--;
+      startCountDown = setTimeout(countDown, 1000);
+    } else {
+      wrongAnswer();
+    }
+  }
+
+  function resetCount() {
+    clearTimeout(startCountDown);
+    seconds = 15;
+  }
 
   function play() {
     $("#prompt").text(`Who's That Pokemon?`);
@@ -93,10 +110,8 @@ $(document).ready(function() {
       $(this).click(function() {
         if ($(this).attr("value") === questions[currentQuestion]["name"]) {
           checkAnswer();
-          $("#options button").remove();
         } else {
           wrongAnswer();
-          $("#options button").remove();
         }
       });
     });
@@ -115,9 +130,11 @@ $(document).ready(function() {
   }
 
   function nextQuestion() {
+    $("#options button").remove();
     if ($("img").attr("alt") !== questions[questions.length - 1].name) {
       setTimeout(function() {
         currentQuestion++;
+        countDown()
         play();
       }, 3000);
     } else {
@@ -125,6 +142,7 @@ $(document).ready(function() {
         reset();
       }, 3000);
     }
+    resetCount();
   }
 
   function reset() {
